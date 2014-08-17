@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ResolutionBuddy;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
+using ResolutionBuddy;
+using System.Collections.Generic;
 
 namespace TouchScreenBuddy
 {
@@ -65,12 +60,16 @@ namespace TouchScreenBuddy
 		{
 			base.Update(gameTime);
 
-			//clear out the taps & touches
-			Taps.Clear();
-			Touches.Clear();
+			if (IsEnabled)
+			{
+				//clear out the taps & touches
+				Taps.Clear();
+				Touches.Clear();
 
-			GetTaps();
-			GetTouches();
+				//get the new taps & touches
+				GetTaps();
+				GetTouches();
+			}
 		}
 
 		/// <summary>
