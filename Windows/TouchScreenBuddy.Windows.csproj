@@ -48,12 +48,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ResolutionBuddy\Windows\ResolutionBuddy.Windows.csproj">
-      <Project>{28342df0-0089-4a2a-b3d4-6dcd65d6d8e4}</Project>
-      <Name>ResolutionBuddy.Windows</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

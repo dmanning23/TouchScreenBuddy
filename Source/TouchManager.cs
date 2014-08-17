@@ -1,10 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
-using ResolutionBuddy;
 using System.Collections.Generic;
 
 namespace TouchScreenBuddy
 {
+	/// <summary>
+	/// delegate to convert a screen coordinate to a game coordinate
+	/// </summary>
+	/// <param name="screenCoord"></param>
+	/// <returns></returns>
+	public delegate Vector2 ConvertToGameCoord(Vector2 screenCoord);
+
 	/// <summary>
 	/// This thing is a central location to check for any taps or touches on a touchscreen device.
 	/// </summary>
@@ -22,7 +28,15 @@ namespace TouchScreenBuddy
 		/// </summary>
 		public List<Vector2> Touches { get; private set; }
 
+		/// <summary>
+		/// Whether or not touch is enabled
+		/// </summary>
 		public bool IsEnabled { get; private set; }
+
+		/// <summary>
+		/// method used to convert coordinates
+		/// </summary>
+		private ConvertToGameCoord _gameCoord;
 
 		#endregion //Properties
 
@@ -32,11 +46,13 @@ namespace TouchScreenBuddy
 		/// constructor
 		/// </summary>
 		/// <param name="game"></param>
-		public TouchManager(Game game)
+		public TouchManager(Game game, ConvertToGameCoord gameCoord = null)
 			: base(game)
 		{
 			Taps = new List<Vector2>();
 			Touches = new List<Vector2>();
+
+			_gameCoord = gameCoord;
 
 			//Check if we even have a touchscreen available
 			TouchPanelCapabilities touch = TouchPanel.GetCapabilities();
@@ -83,7 +99,7 @@ namespace TouchScreenBuddy
 				GestureSample gesture = TouchPanel.ReadGesture();
 				if (gesture.GestureType == GestureType.Tap)
 				{
-					Taps.Add(Resolution.ScreenToGameCoord(gesture.Position));
+					Taps.Add(ConvertCoordinate(gesture.Position));
 				}
 			}
 		}
@@ -99,9 +115,20 @@ namespace TouchScreenBuddy
 			{
 				if ((touch.State == TouchLocationState.Pressed) || (touch.State == TouchLocationState.Moved))
 				{
-					Touches.Add(Resolution.ScreenToGameCoord(touch.Position));
+					Touches.Add(ConvertCoordinate(touch.Position));
 				}
 			}
+		}
+
+		/// <summary>
+		/// Convert a coordinate from screen to game
+		/// </summary>
+		/// <param name="screenCoord"></param>
+		/// <returns></returns>
+		private Vector2 ConvertCoordinate(Vector2 screenCoord)
+		{
+			//use the delegate is available
+			return ((null != _gameCoord) ? _gameCoord(screenCoord) : screenCoord);
 		}
 	
 		#endregion //Methods
