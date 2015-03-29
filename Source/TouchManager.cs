@@ -45,7 +45,6 @@ namespace TouchScreenBuddy
 		/// <summary>
 		/// constructor
 		/// </summary>
-		/// <param name="game"></param>
 		public TouchManager(Game game, ConvertToGameCoord gameCoord = null)
 			: base(game)
 		{
@@ -64,7 +63,8 @@ namespace TouchScreenBuddy
 				TouchPanel.EnabledGestures = GestureType.Tap;
 			}
 
-			// Register ourselves to implement the IMessageDisplay service.
+			//Register ourselves to implement the DI container service.
+			game.Components.Add(this);
 			game.Services.AddService(typeof(ITouchManager), this);
 		}
 
