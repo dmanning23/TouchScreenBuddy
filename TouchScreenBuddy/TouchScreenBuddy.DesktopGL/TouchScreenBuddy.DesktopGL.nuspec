@@ -2,23 +2,23 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>TouchScreenBuddy.DesktopGL</id>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <title>TouchScreenBuddy.DesktopGL</title>
         <authors>dmanning23</authors>
 		<owners>dmanning23</owners>
-		<projectUrl>https://github.com/dmanning23/BasicTouchScreenBuddy</projectUrl>
-		<licenseUrl>https://github.com/dmanning23/BasicTouchScreenBuddy/blob/master/LICENSE.txt</licenseUrl>
+		<projectUrl>https://github.com/dmanning23/TouchScreenBuddy</projectUrl>
+		<licenseUrl>https://github.com/dmanning23/TouchScreenBuddy/blob/master/LICENSE.txt</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Manage tap points on a touchscreen game in MonoGame</description>
         <releaseNotes />
         <copyright>Copyright 2016</copyright>
         <tags>MonoGame DesktopGL</tags>
         <dependencies>
-            <dependency id="MonoGame.Framework.DesktopGL" version="(3.5,)"/>
+            <dependency id="MonoGame.Framework.DesktopGL" version="3.5"/>
 		</dependencies>
     </metadata>
     <files>
-        <file src="Y:\Documents\Projects\TouchScreenBuddy\TouchScreenBuddy\TouchScreenBuddy.DesktopGL\bin\Release\TouchScreenBuddy.DesktopGL.pdb" target="lib\TouchScreenBuddy.DesktopGL.pdb" />
-        <file src="Y:\Documents\Projects\TouchScreenBuddy\TouchScreenBuddy\TouchScreenBuddy.DesktopGL\bin\Release\TouchScreenBuddy.DesktopGL.dll" target="lib\TouchScreenBuddy.DesktopGL.dll" />
+        <file src="bin\Release\TouchScreenBuddy.DesktopGL.pdb" target="lib\TouchScreenBuddy.DesktopGL.pdb" />
+        <file src="bin\Release\TouchScreenBuddy.DesktopGL.dll" target="lib\TouchScreenBuddy.DesktopGL.dll" />
     </files>
 </package>
