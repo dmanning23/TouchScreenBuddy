@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using InputHelper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ namespace TouchScreenBuddy
 	/// <summary>
 	/// This thing is a central location to check for any taps or touches on a touchscreen device.
 	/// </summary>
-	public class TouchManager : GameComponent, ITouchManager
+	public class TouchManager : ITouchManager
 	{
 		#region Properties
 
@@ -38,6 +39,26 @@ namespace TouchScreenBuddy
 		/// </summary>
 		private ConvertToGameCoord _gameCoord;
 
+		public List<ClickEventArgs> Clicks
+		{
+			get; private set;
+		}
+
+		public List<HighlightEventArgs> Highlights
+		{
+			get; private set;
+		}
+
+		public List<DragEventArgs> Drags
+		{
+			get; private set;
+		}
+
+		public List<DropEventArgs> Drops
+		{
+			get; private set;
+		}
+
 		#endregion //Properties
 
 		#region Methods
@@ -45,11 +66,15 @@ namespace TouchScreenBuddy
 		/// <summary>
 		/// constructor
 		/// </summary>
-		public TouchManager(Game game, ConvertToGameCoord gameCoord = null)
-			: base(game)
+		public TouchManager(ConvertToGameCoord gameCoord = null)
 		{
 			Taps = new List<Vector2>();
 			Touches = new List<Vector2>();
+
+			Clicks = new List<ClickEventArgs>();
+			Highlights = new List<HighlightEventArgs>();
+			Drags = new List<DragEventArgs>();
+			Drops = new List<DropEventArgs>();
 
 			_gameCoord = gameCoord;
 
@@ -62,29 +87,45 @@ namespace TouchScreenBuddy
 			{
 				TouchPanel.EnabledGestures = GestureType.Tap;
 			}
-
-			//Register ourselves to implement the DI container service.
-			game.Components.Add(this);
-			game.Services.AddService(typeof(ITouchManager), this);
 		}
 
 		/// <summary>
-		/// update method, called every frame to get the taps & touches
+		/// Update the mouse manager.
 		/// </summary>
-		/// <param name="gameTime"></param>
-		public override void Update(GameTime gameTime)
+		public void Update(bool isActive)
 		{
-			base.Update(gameTime);
+			//clear out the taps & touches
+			Taps.Clear();
+			Touches.Clear();
+			Clicks.Clear();
+			Highlights.Clear();
+			Drags.Clear();
+			Drops.Clear();
 
-			if (IsEnabled)
+			if (isActive)
 			{
-				//clear out the taps & touches
-				Taps.Clear();
-				Touches.Clear();
-
 				//get the new taps & touches
 				GetTaps();
 				GetTouches();
+
+				//check if the player is holding down on the screen
+				foreach (var touch in Touches)
+				{
+					Highlights.Add(new HighlightEventArgs()
+					{
+						Position = touch
+					});
+				}
+
+				//check if the player tapped on the screen
+				foreach (var tap in Taps)
+				{
+					Clicks.Add(new ClickEventArgs()
+					{
+						Position = tap,
+						Button = MouseButton.Left
+					});
+				}
 			}
 		}
 

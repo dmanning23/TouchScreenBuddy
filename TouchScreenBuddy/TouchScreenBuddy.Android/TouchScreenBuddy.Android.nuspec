@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>TouchScreenBuddy.Android</id>
-		<version>1.0.4</version>
+		<version>1.0.5</version>
 		<title>TouchScreenBuddy.Android</title>
 		<authors>dmanning23</authors>
 		<owners>dmanning23</owners>
@@ -15,6 +15,7 @@
 		<tags>MonoGame Android</tags>
 		<dependencies>
 			<dependency id="MonoGame.Framework.Android" version="3.5"/>
+			<dependency id="InputHelper.Android" version="1.0"/>
 		</dependencies>
 	</metadata>
 	<files>

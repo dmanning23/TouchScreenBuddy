@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using InputHelper;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace TouchScreenBuddy
@@ -6,7 +7,7 @@ namespace TouchScreenBuddy
 	/// <summary>
 	/// Interface for the touch manager item.
 	/// </summary>
-	public interface ITouchManager : IUpdateable
+	public interface ITouchManager : IInputHelper
 	{
 		/// <summary>
 		/// All the points that have new taps, stored in game coordinates.

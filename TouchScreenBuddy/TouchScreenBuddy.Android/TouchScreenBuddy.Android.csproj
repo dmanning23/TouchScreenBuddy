@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="InputHelper.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\InputHelper.Android.1.0.2\lib\InputHelper.Android.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoGame.Framework.Android.3.5.1.1679\lib\MonoAndroid\MonoGame.Framework.dll</HintPath>
@@ -49,6 +53,9 @@
   <ItemGroup>
     <Compile Include="..\..\Source\ITouchManager.cs">
       <Link>ITouchManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Source\TouchComponent.cs">
+      <Link>TouchComponent.cs</Link>
     </Compile>
     <Compile Include="..\..\Source\TouchManager.cs">
       <Link>TouchManager.cs</Link>

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>TouchScreenBuddy.DesktopGL</id>
-        <version>1.0.4</version>
+		<version>1.0.5</version>
         <title>TouchScreenBuddy.DesktopGL</title>
         <authors>dmanning23</authors>
 		<owners>dmanning23</owners>
@@ -15,6 +15,7 @@
         <tags>MonoGame DesktopGL</tags>
         <dependencies>
             <dependency id="MonoGame.Framework.DesktopGL" version="3.5"/>
+			<dependency id="InputHelper.DesktopGL" version="1.0"/>
 		</dependencies>
     </metadata>
     <files>
