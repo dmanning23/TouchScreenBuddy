@@ -20,6 +20,11 @@ namespace TouchScreenBuddy
 		#region Properties
 
 		/// <summary>
+		/// pixels^2 from start position to register as a drag and not a click
+		/// </summary>
+		private const float DragDelta = 25f;
+
+		/// <summary>
 		/// All the points that have new taps, stored in game coordinates.
 		/// </summary>
 		public List<Vector2> Taps { get; private set; }
@@ -38,6 +43,10 @@ namespace TouchScreenBuddy
 		/// method used to convert coordinates
 		/// </summary>
 		private ConvertToGameCoord _gameCoord;
+
+		private Vector2 DragStartPosition { get; set; }
+
+		private int TouchId { get; set; }
 
 		public List<ClickEventArgs> Clicks
 		{
@@ -68,6 +77,9 @@ namespace TouchScreenBuddy
 		/// </summary>
 		public TouchManager(ConvertToGameCoord gameCoord = null)
 		{
+			TouchId = -1;
+			DragStartPosition = Vector2.Zero;
+
 			Taps = new List<Vector2>();
 			Touches = new List<Vector2>();
 
@@ -154,9 +166,75 @@ namespace TouchScreenBuddy
 			TouchCollection touchCollection = TouchPanel.GetState();
 			foreach (var touch in touchCollection)
 			{
-				if ((touch.State == TouchLocationState.Pressed) || (touch.State == TouchLocationState.Moved))
+				if (touch.State == TouchLocationState.Pressed)
 				{
 					Touches.Add(ConvertCoordinate(touch.Position));
+
+					//set the drag operation, just in case 
+					TouchId = touch.Id;
+					DragStartPosition = ConvertCoordinate(touch.Position);
+				}
+				else if (touch.State == TouchLocationState.Moved)
+				{
+					TouchLocation prevLoc;
+
+					// Sometimes TryGetPreviousLocation can fail. Bail out early if this happened
+					// or if the last state didn't move
+					if (!touch.TryGetPreviousLocation(out prevLoc) || 
+						prevLoc.State != TouchLocationState.Moved ||
+						TouchId != touch.Id)
+					{
+						continue;
+					}
+
+					// get your delta
+					var delta = touch.Position - prevLoc.Position;
+
+					// Usually you don't want to do something if the user drags 1 pixel.
+					if (delta.LengthSquared() < DragDelta)
+					{
+						continue;
+					}
+
+					//fire off drop event
+					Drags.Add(new DragEventArgs()
+					{
+						Start = DragStartPosition,
+						Current = ConvertCoordinate(touch.Position),
+						Delta = (touch.Position - prevLoc.Position),
+						Button = MouseButton.Left
+					});
+				}
+				else if (touch.State == TouchLocationState.Released)
+				{
+					TouchLocation prevLoc;
+
+					// Sometimes TryGetPreviousLocation can fail. Bail out early if this happened
+					// or if the last state didn't move
+					if (!touch.TryGetPreviousLocation(out prevLoc) ||
+						prevLoc.State != TouchLocationState.Moved ||
+						TouchId != touch.Id)
+					{
+						continue;
+					}
+
+					// get your delta
+					var touchPos = ConvertCoordinate(touch.Position);
+					var delta = touchPos - DragStartPosition;
+
+					// Usually you don't want to do something if the user drags 1 pixel.
+					if (delta.LengthSquared() < DragDelta)
+					{
+						continue;
+					}
+
+					//fire off drop event
+					Drops.Add(new DropEventArgs()
+					{
+						Start = DragStartPosition,
+						Drop = touchPos,
+						Button = MouseButton.Left
+					});
 				}
 			}
 		}
