@@ -17,12 +17,18 @@ namespace TouchScreenBuddy
 	/// </summary>
 	public class TouchManager : ITouchManager
 	{
-		#region Properties
+		#region Fields
 
 		/// <summary>
 		/// pixels^2 from start position to register as a drag and not a click
 		/// </summary>
-		private const float DragDelta = 25f;
+		private const float _dragDelta = 25f;
+
+		private const int _numTouches = 10;
+
+		#endregion //Fields
+
+		#region Properties
 
 		/// <summary>
 		/// All the points that have new taps, stored in game coordinates.
@@ -44,9 +50,7 @@ namespace TouchScreenBuddy
 		/// </summary>
 		private ConvertToGameCoord _gameCoord;
 
-		private Vector2 DragStartPosition { get; set; }
-
-		private int TouchId { get; set; }
+		private TouchLocation[] TouchStartPosition { get; set; }
 
 		public List<ClickEventArgs> Clicks
 		{
@@ -77,9 +81,6 @@ namespace TouchScreenBuddy
 		/// </summary>
 		public TouchManager(ConvertToGameCoord gameCoord = null)
 		{
-			TouchId = -1;
-			DragStartPosition = Vector2.Zero;
-
 			Taps = new List<Vector2>();
 			Touches = new List<Vector2>();
 
@@ -87,6 +88,8 @@ namespace TouchScreenBuddy
 			Highlights = new List<HighlightEventArgs>();
 			Drags = new List<DragEventArgs>();
 			Drops = new List<DropEventArgs>();
+
+			TouchStartPosition = new TouchLocation[_numTouches];
 
 			_gameCoord = gameCoord;
 
@@ -166,23 +169,23 @@ namespace TouchScreenBuddy
 			TouchCollection touchCollection = TouchPanel.GetState();
 			foreach (var touch in touchCollection)
 			{
+				var touchIndex = touch.Id % _numTouches;
+
 				if (touch.State == TouchLocationState.Pressed)
 				{
 					Touches.Add(ConvertCoordinate(touch.Position));
 
 					//set the drag operation, just in case 
-					TouchId = touch.Id;
-					DragStartPosition = ConvertCoordinate(touch.Position);
+					TouchStartPosition[touchIndex] = touch;
 				}
 				else if (touch.State == TouchLocationState.Moved)
 				{
+					//Sometimes TryGetPreviousLocation can fail. 
+					//Bail out early if this happened or if the last state didn't move
 					TouchLocation prevLoc;
-
-					// Sometimes TryGetPreviousLocation can fail. Bail out early if this happened
-					// or if the last state didn't move
 					if (!touch.TryGetPreviousLocation(out prevLoc) || 
 						prevLoc.State != TouchLocationState.Moved ||
-						TouchId != touch.Id)
+						TouchStartPosition[touchIndex].Id != touch.Id)
 					{
 						continue;
 					}
@@ -190,16 +193,10 @@ namespace TouchScreenBuddy
 					// get your delta
 					var delta = touch.Position - prevLoc.Position;
 
-					// Usually you don't want to do something if the user drags 1 pixel.
-					if (delta.LengthSquared() < DragDelta)
-					{
-						continue;
-					}
-
-					//fire off drop event
+					//fire off drag event
 					Drags.Add(new DragEventArgs()
 					{
-						Start = DragStartPosition,
+						Start = ConvertCoordinate(TouchStartPosition[touchIndex].Position),
 						Current = ConvertCoordinate(touch.Position),
 						Delta = (touch.Position - prevLoc.Position),
 						Button = MouseButton.Left
@@ -207,23 +204,23 @@ namespace TouchScreenBuddy
 				}
 				else if (touch.State == TouchLocationState.Released)
 				{
+					//Sometimes TryGetPreviousLocation can fail. 
+					//Bail out early if this happened or if the last state didn't move
 					TouchLocation prevLoc;
-
-					// Sometimes TryGetPreviousLocation can fail. Bail out early if this happened
-					// or if the last state didn't move
 					if (!touch.TryGetPreviousLocation(out prevLoc) ||
 						prevLoc.State != TouchLocationState.Moved ||
-						TouchId != touch.Id)
+						TouchStartPosition[touchIndex].Id != touch.Id)
 					{
 						continue;
 					}
 
 					// get your delta
+					var dragStartPosition = ConvertCoordinate(TouchStartPosition[touchIndex].Position);
 					var touchPos = ConvertCoordinate(touch.Position);
-					var delta = touchPos - DragStartPosition;
+					var delta = touchPos - dragStartPosition;
 
 					// Usually you don't want to do something if the user drags 1 pixel.
-					if (delta.LengthSquared() < DragDelta)
+					if (delta.LengthSquared() < _dragDelta)
 					{
 						continue;
 					}
@@ -231,7 +228,7 @@ namespace TouchScreenBuddy
 					//fire off drop event
 					Drops.Add(new DropEventArgs()
 					{
-						Start = DragStartPosition,
+						Start = dragStartPosition,
 						Drop = touchPos,
 						Button = MouseButton.Left
 					});
