@@ -31,16 +31,6 @@ namespace TouchScreenBuddy
 		#region Properties
 
 		/// <summary>
-		/// All the points that have new taps, stored in game coordinates.
-		/// </summary>
-		public List<Vector2> Taps { get; private set; }
-
-		/// <summary>
-		/// All the points that are currently being touched, in game coordinates.
-		/// </summary>
-		public List<Vector2> Touches { get; private set; }
-
-		/// <summary>
 		/// Whether or not touch is enabled
 		/// </summary>
 		public bool IsEnabled { get; private set; }
@@ -81,9 +71,6 @@ namespace TouchScreenBuddy
 		/// </summary>
 		public TouchManager(ConvertToGameCoord gameCoord = null)
 		{
-			Taps = new List<Vector2>();
-			Touches = new List<Vector2>();
-
 			Clicks = new List<ClickEventArgs>();
 			Highlights = new List<HighlightEventArgs>();
 			Drags = new List<DragEventArgs>();
@@ -110,8 +97,6 @@ namespace TouchScreenBuddy
 		public void Update(bool isActive)
 		{
 			//clear out the taps & touches
-			Taps.Clear();
-			Touches.Clear();
 			Clicks.Clear();
 			Highlights.Clear();
 			Drags.Clear();
@@ -122,25 +107,6 @@ namespace TouchScreenBuddy
 				//get the new taps & touches
 				GetTaps();
 				GetTouches();
-
-				//check if the player is holding down on the screen
-				foreach (var touch in Touches)
-				{
-					Highlights.Add(new HighlightEventArgs()
-					{
-						Position = touch
-					});
-				}
-
-				//check if the player tapped on the screen
-				foreach (var tap in Taps)
-				{
-					Clicks.Add(new ClickEventArgs()
-					{
-						Position = tap,
-						Button = MouseButton.Left
-					});
-				}
 			}
 		}
 
@@ -155,7 +121,12 @@ namespace TouchScreenBuddy
 				GestureSample gesture = TouchPanel.ReadGesture();
 				if (gesture.GestureType == GestureType.Tap)
 				{
-					Taps.Add(ConvertCoordinate(gesture.Position));
+					var position = ConvertCoordinate(gesture.Position);
+					Clicks.Add(new ClickEventArgs()
+					{
+						Position = position,
+						Button = MouseButton.Left
+					});
 				}
 			}
 		}
@@ -173,7 +144,7 @@ namespace TouchScreenBuddy
 
 				if (touch.State == TouchLocationState.Pressed)
 				{
-					Touches.Add(ConvertCoordinate(touch.Position));
+					AddHighlightEvent(touch);
 
 					//set the drag operation, just in case 
 					TouchStartPosition[touchIndex] = touch;
@@ -189,6 +160,8 @@ namespace TouchScreenBuddy
 					{
 						continue;
 					}
+
+					AddHighlightEvent(touch);
 
 					// get your delta
 					var delta = touch.Position - prevLoc.Position;
@@ -245,6 +218,15 @@ namespace TouchScreenBuddy
 		{
 			//use the delegate is available
 			return ((null != _gameCoord) ? _gameCoord(screenCoord) : screenCoord);
+		}
+
+		private void AddHighlightEvent(TouchLocation touch)
+		{
+			//add a highlight event at that location
+			Highlights.Add(new HighlightEventArgs()
+			{
+				Position = ConvertCoordinate(touch.Position)
+			});
 		}
 	
 		#endregion //Methods

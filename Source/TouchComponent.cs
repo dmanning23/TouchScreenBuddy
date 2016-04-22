@@ -48,22 +48,6 @@ namespace TouchScreenBuddy
 			}
 		}
 
-		public List<Vector2> Taps
-		{
-			get
-			{
-				return TouchManager.Taps;
-			}
-		}
-
-		public List<Vector2> Touches
-		{
-			get
-			{
-				return TouchManager.Touches;
-			}
-		}
-
 		public bool IsEnabled
 		{
 			get
