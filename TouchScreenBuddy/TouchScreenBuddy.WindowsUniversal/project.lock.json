@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     "UAP,Version=v10.0": {
-      "InputHelper/1.0.7": {
+      "InputHelper/1.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
@@ -1966,7 +1966,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "InputHelper/1.0.7": {
+      "InputHelper/1.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
@@ -3795,7 +3795,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "InputHelper/1.0.7": {
+      "InputHelper/1.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
@@ -5581,7 +5581,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "InputHelper/1.0.7": {
+      "InputHelper/1.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
@@ -7419,7 +7419,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "InputHelper/1.0.7": {
+      "InputHelper/1.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
@@ -9205,7 +9205,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "InputHelper/1.0.7": {
+      "InputHelper/1.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
@@ -11043,7 +11043,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "InputHelper/1.0.7": {
+      "InputHelper/1.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
@@ -12830,11 +12830,11 @@
     }
   },
   "libraries": {
-    "InputHelper/1.0.7": {
-      "sha512": "Ieo04bxaB0VdI5MI9mQIRdfGK7fSk5Wy/WvGSmk87sajCF2Vtip8fhqbWu0gg0WjlY4uOPjubVteofY7EMn/Xg==",
+    "InputHelper/1.0.11": {
+      "sha512": "4ZAsiFPI1K5MnTFHvsA9h0u9YpW4sXmg8FY7aGWrichChoE79wL0449m6xIu2QmWXPj3qV9yoF7kGgMAOkHkZw==",
       "type": "package",
       "files": [
-        "InputHelper.1.0.7.nupkg.sha512",
+        "InputHelper.1.0.11.nupkg.sha512",
         "InputHelper.nuspec",
         "lib/MonoAndroid10/InputHelper.Android.dll",
         "lib/MonoAndroid10/InputHelper.Android.pdb",
@@ -16199,7 +16199,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "InputHelper >= 1.0.7",
+      "InputHelper >= 1.0.11",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0",
       "MonoGame.Framework.WindowsUniversal >= 3.5.1.1679",
       "PrimitiveBuddy >= 1.0.0"
