@@ -63,10 +63,10 @@ namespace TouchScreenBuddy
 		/// <summary>
 		/// Constructs a new input state.
 		/// </summary>
-		public TouchComponent(Game game)
+		public TouchComponent(Game game, ConvertToGameCoord gameCoord)
 			: base(game)
 		{
-			TouchManager = new TouchManager();
+			TouchManager = new TouchManager(gameCoord);
 
 			//Register ourselves to implement the DI container service.
 			game.Components.Add(this);
