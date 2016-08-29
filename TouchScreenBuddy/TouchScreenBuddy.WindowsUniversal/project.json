@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "InputHelper": "1.0.15",
+    "InputHelper": "1.0.16",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
     "MonoGame.Framework.WindowsUniversal": "3.5.1.1679",
     "PrimitiveBuddy": "1.0.0"
