@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>TouchScreenBuddy</id>
-		<version>1.0.6</version>
+		<version>1.0.7</version>
 		<title>TouchScreenBuddy</title>
 		<authors>dmanning23</authors>
 		<owners>dmanning23</owners>
@@ -41,7 +41,7 @@
 			</group>
 
 			<group targetFramework="net451">
-				<dependency id="MonoGame.Framework.DesktopGL" version="3.5"/>
+				<dependency id="MonoGame.Framework.WindowsDX" version="3.5"/>
 				<dependency id="InputHelper" version="1.0"/>
 				<dependency id="PrimitiveBuddy" version="1.0"/>
 			</group>
@@ -62,9 +62,9 @@
 		<file src="TouchScreenBuddy.WindowsUniversal\bin\Release\TouchScreenBuddy.WindowsUniversal.pdb" target="lib\uap10.0\TouchScreenBuddy.WindowsUniversal.pdb" />
 		<file src="TouchScreenBuddy.WindowsUniversal\bin\Release\TouchScreenBuddy.WindowsUniversal.dll" target="lib\uap10.0\TouchScreenBuddy.WindowsUniversal.dll" />
 
-		<!--DesktopGL-->
-		<file src="TouchScreenBuddy.DesktopGL\bin\Release\TouchScreenBuddy.DesktopGL.pdb" target="lib\net451\TouchScreenBuddy.DesktopGL.pdb" />
-		<file src="TouchScreenBuddy.DesktopGL\bin\Release\TouchScreenBuddy.DesktopGL.dll" target="lib\net451\TouchScreenBuddy.DesktopGL.dll" />
+		<!--WindowsDX-->
+		<file src="TouchScreenBuddy.WindowsDX\bin\Release\TouchScreenBuddy.WindowsDX.pdb" target="lib\net451\TouchScreenBuddy.WindowsDX.pdb" />
+		<file src="TouchScreenBuddy.WindowsDX\bin\Release\TouchScreenBuddy.WindowsDX.dll" target="lib\net451\TouchScreenBuddy.WindowsDX.dll" />
 
 	</files>
 </package>
