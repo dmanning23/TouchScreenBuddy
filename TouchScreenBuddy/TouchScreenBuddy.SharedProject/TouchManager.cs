@@ -110,6 +110,8 @@ namespace TouchScreenBuddy
 				}
 				else if (touch.State == TouchLocationState.Moved)
 				{
+					AddHighlightEvent(touch);
+
 					//Sometimes TryGetPreviousLocation can fail. 
 					//Bail out early if this happened or if the last state didn't move
 					TouchLocation prevLoc;
@@ -119,8 +121,6 @@ namespace TouchScreenBuddy
 					{
 						continue;
 					}
-
-					AddHighlightEvent(touch);
 
 					// get your delta
 					var delta = touch.Position - prevLoc.Position;
