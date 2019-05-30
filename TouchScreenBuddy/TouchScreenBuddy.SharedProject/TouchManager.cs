@@ -1,4 +1,5 @@
 ﻿using InputHelper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 
 namespace TouchScreenBuddy
@@ -28,6 +29,25 @@ namespace TouchScreenBuddy
 
 		private TouchLocation[] TouchStartPosition { get; set; }
 
+		public GestureType SupportedGestures
+		{
+			get
+			{
+				return IsEnabled ? TouchPanel.EnabledGestures : GestureType.None;
+			}
+			set
+			{
+				if (IsEnabled)
+				{
+					TouchPanel.EnabledGestures = value;
+				}
+			}
+		}
+
+		TouchCollection TouchCollection { get; set; }
+
+		PinchManager Pinch;
+
 		#endregion //Properties
 
 		#region Methods
@@ -35,7 +55,7 @@ namespace TouchScreenBuddy
 		/// <summary>
 		/// constructor
 		/// </summary>
-		public TouchManager(ConvertToGameCoord gameCoord) : base(gameCoord)
+		public TouchManager(ConvertToGameCoord gameCoord, GestureType supportedGestures = GestureType.Tap) : base(gameCoord)
 		{
 			TouchStartPosition = new TouchLocation[_numTouches];
 
@@ -44,10 +64,7 @@ namespace TouchScreenBuddy
 			IsEnabled = touch.IsConnected;
 
 			//enable the tap gesture if available
-			if (IsEnabled)
-			{
-				TouchPanel.EnabledGestures = GestureType.Tap;
-			}
+			SupportedGestures = supportedGestures;
 		}
 
 		/// <summary>
@@ -60,11 +77,15 @@ namespace TouchScreenBuddy
 			Highlights.Clear();
 			Drags.Clear();
 			Drops.Clear();
+			Flicks.Clear();
+			Pinches.Clear();
 
 			if (isActive)
 			{
+				TouchCollection = TouchPanel.GetState();
+
 				//get the new taps & touches
-				GetTaps();
+				GetGestures();
 				GetTouches();
 			}
 		}
@@ -72,21 +93,108 @@ namespace TouchScreenBuddy
 		/// <summary>
 		/// get all the current tap gestures
 		/// </summary>
-		private void GetTaps()
+		private void GetGestures()
 		{
 			//go through the taps and get all the new ones
 			while (TouchPanel.IsGestureAvailable)
 			{
 				GestureSample gesture = TouchPanel.ReadGesture();
-				if (gesture.GestureType == GestureType.Tap)
+				switch (gesture.GestureType)
 				{
-					var position = ConvertCoordinate(gesture.Position);
-					Clicks.Add(new ClickEventArgs()
-					{
-						Position = position,
-						Button = MouseButton.Left
-					});
+					case GestureType.Tap:
+						{
+							var position = ConvertCoordinate(gesture.Position);
+							Clicks.Add(new ClickEventArgs()
+							{
+								Position = position,
+								Button = MouseButton.Left
+							});
+						}
+						break;
+
+					case GestureType.DoubleTap:
+						{
+							var position = ConvertCoordinate(gesture.Position);
+							Clicks.Add(new ClickEventArgs()
+							{
+								Position = position,
+								Button = MouseButton.Left,
+								DoubleClick = true,
+							});
+						}
+						break;
+
+					case GestureType.Flick:
+						{
+							AddFlickEvent(gesture.Delta);
+						}
+						break;
+
+					case GestureType.Pinch:
+						{
+							var position1 = ConvertCoordinate(gesture.Position);
+							var position2 = ConvertCoordinate(gesture.Position2);
+
+							if (null == Pinch)
+							{
+								Pinch = new PinchManager(position1, position2);
+							}
+							else
+							{
+								Pinch.Update(position1, position2);
+							}
+							Pinches.Add(new PinchEventArgs(Pinch.Delta));
+						}
+						break;
+
+					case GestureType.PinchComplete:
+						{
+							Pinch = null;
+						}
+						break;
 				}
+			}
+		}
+
+		private void AddFlickEvent(Vector2 delta)
+		{
+			//Was that gesture strong enough to register as a "flick"?
+			var deltaLength = delta.Length();
+			if (deltaLength < 8000)
+			{
+				return;
+			}
+
+			//go though the points that are being touched
+			foreach (var touch in TouchCollection)
+			{
+				var touchIndex = touch.Id % _numTouches;
+
+				//Sometimes TryGetPreviousLocation can fail. 
+				//Bail out early if this happened or if the last state didn't move
+				TouchLocation prevLoc;
+				if (!touch.TryGetPreviousLocation(out prevLoc) ||
+					TouchStartPosition[touchIndex].Id != touch.Id)
+				{
+					continue;
+				}
+
+				//get the start of the event
+				var start = ConvertCoordinate(TouchStartPosition[touchIndex].Position);
+
+				//get the end of the event
+				var end = ConvertCoordinate(touch.Position);
+
+				//Was that actually a flick or just a dragdrop?
+				var length = (start - end).LengthSquared();
+				//if (length < 100000)
+				//{
+					Flicks.Add(new FlickEventArgs()
+					{
+						Position = end,
+						Delta = delta,
+					});
+				//};
 			}
 		}
 
@@ -96,8 +204,7 @@ namespace TouchScreenBuddy
 		private void GetTouches()
 		{
 			//go though the points that are being touched
-			TouchCollection touchCollection = TouchPanel.GetState();
-			foreach (var touch in touchCollection)
+			foreach (var touch in TouchCollection)
 			{
 				var touchIndex = touch.Id % _numTouches;
 

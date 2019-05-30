@@ -1,5 +1,6 @@
 using InputHelper;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input.Touch;
 using System.Collections.Generic;
 
 namespace TouchScreenBuddy
@@ -48,11 +49,39 @@ namespace TouchScreenBuddy
 			}
 		}
 
+		public List<FlickEventArgs> Flicks
+		{
+			get
+			{
+				return TouchManager.Flicks;
+			}
+		}
+
+		public List<PinchEventArgs> Pinches
+		{
+			get
+			{
+				return TouchManager.Pinches;
+			}
+		}
+
 		public bool IsEnabled
 		{
 			get
 			{
 				return TouchManager.IsEnabled;
+			}
+		}
+
+		public GestureType SupportedGestures
+		{
+			get
+			{
+				return TouchManager.SupportedGestures;
+			}
+			set
+			{
+				TouchManager.SupportedGestures = value;
 			}
 		}
 

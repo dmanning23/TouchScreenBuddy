@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ITouchManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PinchManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TouchComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TouchManager.cs" />
   </ItemGroup>
