@@ -25,7 +25,7 @@ namespace TouchScreenBuddy
 			var distance2 = (second - first).Length();
 
 			//set the delta as the change between them
-			Delta = -1 * (distance2 - distance1);
+			Delta = (distance2 - distance1);
 
 			//update the stored points
 			First = first;

@@ -1,4 +1,5 @@
 ﻿using InputHelper;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace TouchScreenBuddy
 {
@@ -11,5 +12,13 @@ namespace TouchScreenBuddy
 		/// Check if touch is even enabled. will be false if no touch screen available.
 		/// </summary>
 		bool IsEnabled { get; }
+
+		GestureType SupportedGestures { get; set; }
+
+		/// <summary>
+		/// The minimum length of a gesture for it to register as a flick.
+		/// Defaults to 8000, make it shorter for 1080p?
+		/// </summary>
+		float FlickMinLength { get; set; }
 	}
 }

@@ -17,72 +17,32 @@ namespace TouchScreenBuddy
 			get; private set;
 		}
 
-		public List<ClickEventArgs> Clicks
-		{
-			get
-			{
-				return TouchManager.Clicks;
-			}
-		}
+		public List<ClickEventArgs> Clicks => TouchManager.Clicks;
 
-		public List<HighlightEventArgs> Highlights
-		{
-			get
-			{
-				return TouchManager.Highlights;
-			}
-		}
+		public List<HighlightEventArgs> Highlights => TouchManager.Highlights;
 
-		public List<DragEventArgs> Drags
-		{
-			get
-			{
-				return TouchManager.Drags;
-			}
-		}
+		public List<DragEventArgs> Drags => TouchManager.Drags;
 
-		public List<DropEventArgs> Drops
-		{
-			get
-			{
-				return TouchManager.Drops;
-			}
-		}
+		public List<DropEventArgs> Drops => TouchManager.Drops;
 
-		public List<FlickEventArgs> Flicks
-		{
-			get
-			{
-				return TouchManager.Flicks;
-			}
-		}
+		public List<FlickEventArgs> Flicks => TouchManager.Flicks;
 
-		public List<PinchEventArgs> Pinches
-		{
-			get
-			{
-				return TouchManager.Pinches;
-			}
-		}
+		public List<PinchEventArgs> Pinches => TouchManager.Pinches;
 
-		public bool IsEnabled
-		{
-			get
-			{
-				return TouchManager.IsEnabled;
-			}
-		}
+		public bool IsEnabled => TouchManager.IsEnabled;
 
 		public GestureType SupportedGestures
 		{
-			get
-			{
-				return TouchManager.SupportedGestures;
-			}
-			set
-			{
-				TouchManager.SupportedGestures = value;
-			}
+			get => TouchManager.SupportedGestures;
+			set => TouchManager.SupportedGestures = value;
+		}
+
+		public float FlickMinLength => TouchManager.FlickMinLength;
+
+		float ITouchManager.FlickMinLength
+		{
+			get => TouchManager.FlickMinLength;
+			set => TouchManager.FlickMinLength = value;
 		}
 
 		#endregion //Properties
@@ -100,6 +60,7 @@ namespace TouchScreenBuddy
 			//Register ourselves to implement the DI container service.
 			game.Components.Add(this);
 			game.Services.AddService(typeof(IInputHelper), this);
+			game.Services.AddService(typeof(ITouchManager), this);
 		}
 		
 		#endregion //Initialization

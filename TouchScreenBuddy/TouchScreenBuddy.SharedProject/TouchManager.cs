@@ -48,6 +48,8 @@ namespace TouchScreenBuddy
 
 		PinchManager Pinch;
 
+		public float FlickMinLength { get; set; } = 8000f;
+
 		#endregion //Properties
 
 		#region Methods
@@ -80,6 +82,12 @@ namespace TouchScreenBuddy
 			Flicks.Clear();
 			Pinches.Clear();
 
+			if (null != Pinch)
+			{
+				//reset the pinch delta
+				Pinch.Delta = 0f;
+			}
+
 			if (isActive)
 			{
 				TouchCollection = TouchPanel.GetState();
@@ -87,6 +95,12 @@ namespace TouchScreenBuddy
 				//get the new taps & touches
 				GetGestures();
 				GetTouches();
+			}
+
+			//Add the pinch event if there is an ongoing gesture
+			if (null != Pinch)
+			{
+				Pinches.Add(new PinchEventArgs(Pinch.Delta));
 			}
 		}
 
@@ -143,7 +157,6 @@ namespace TouchScreenBuddy
 							{
 								Pinch.Update(position1, position2);
 							}
-							Pinches.Add(new PinchEventArgs(Pinch.Delta));
 						}
 						break;
 
@@ -160,7 +173,7 @@ namespace TouchScreenBuddy
 		{
 			//Was that gesture strong enough to register as a "flick"?
 			var deltaLength = delta.Length();
-			if (deltaLength < 8000)
+			if (deltaLength < FlickMinLength)
 			{
 				return;
 			}
@@ -179,22 +192,12 @@ namespace TouchScreenBuddy
 					continue;
 				}
 
-				//get the start of the event
-				var start = ConvertCoordinate(TouchStartPosition[touchIndex].Position);
-
 				//get the end of the event
-				var end = ConvertCoordinate(touch.Position);
-
-				//Was that actually a flick or just a dragdrop?
-				var length = (start - end).LengthSquared();
-				//if (length < 100000)
-				//{
-					Flicks.Add(new FlickEventArgs()
-					{
-						Position = end,
-						Delta = delta,
-					});
-				//};
+				Flicks.Add(new FlickEventArgs()
+				{
+					Position = ConvertCoordinate(touch.Position),
+					Delta = delta,
+				});
 			}
 		}
 
