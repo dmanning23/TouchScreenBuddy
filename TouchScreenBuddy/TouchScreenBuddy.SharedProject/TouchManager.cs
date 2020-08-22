@@ -100,7 +100,18 @@ namespace TouchScreenBuddy
 			//Add the pinch event if there is an ongoing gesture
 			if (null != Pinch)
 			{
-				Pinches.Add(new PinchEventArgs(Pinch.Delta));
+				if (Pinch.Finished)
+				{
+					Pinches.Add(new PinchEventArgs
+					{
+						Release = true
+					});
+					Pinch = null;
+				}
+				else
+				{
+					Pinches.Add(new PinchEventArgs(Pinch.Delta));
+				}
 			}
 		}
 
@@ -162,7 +173,17 @@ namespace TouchScreenBuddy
 
 					case GestureType.PinchComplete:
 						{
-							Pinch = null;
+							if (null == Pinch)
+							{
+								Pinch = new PinchManager()
+								{
+									Finished = true
+								};
+							}
+							else
+							{
+								Pinch.Finished = true;
+							}
 						}
 						break;
 				}

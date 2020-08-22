@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchScreenBuddy.Android", "TouchScreenBuddy.Android\TouchScreenBuddy.Android.csproj", "{3AC0E6EB-82DF-4EE2-ADC0-0C61FABF54BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchScreenBuddy.iOS", "TouchScreenBuddy.iOS\TouchScreenBuddy.iOS.csproj", "{7D4EE18D-2052-4CBB-B52D-1C0E98AFB6D7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchScreenBuddy.WindowsUniversal", "TouchScreenBuddy.WindowsUniversal\TouchScreenBuddy.WindowsUniversal.csproj", "{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A606404-1A7E-4C4D-B171-0E1873982B2C}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +20,6 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		TouchScreenBuddy.SharedProject\TouchScreenBuddy.SharedProject.projitems*{3ac0e6eb-82df-4ee2-adc0-0c61fabf54bd}*SharedItemsImports = 4
-		TouchScreenBuddy.SharedProject\TouchScreenBuddy.SharedProject.projitems*{49ea1009-5b3e-48c6-8bfd-7ad0a622cf07}*SharedItemsImports = 4
 		TouchScreenBuddy.SharedProject\TouchScreenBuddy.SharedProject.projitems*{7d4ee18d-2052-4cbb-b52d-1c0e98afb6d7}*SharedItemsImports = 4
 		TouchScreenBuddy.SharedProject\TouchScreenBuddy.SharedProject.projitems*{81a5b1b8-942f-43bb-9a9e-721ddf5785e4}*SharedItemsImports = 13
 		TouchScreenBuddy.SharedProject\TouchScreenBuddy.SharedProject.projitems*{d50afca2-a209-4140-8b07-86a8ed392b1d}*SharedItemsImports = 4
@@ -90,30 +87,6 @@ Global
 		{7D4EE18D-2052-4CBB-B52D-1C0E98AFB6D7}.Release|x64.Build.0 = Release|Any CPU
 		{7D4EE18D-2052-4CBB-B52D-1C0E98AFB6D7}.Release|x86.ActiveCfg = Release|Any CPU
 		{7D4EE18D-2052-4CBB-B52D-1C0E98AFB6D7}.Release|x86.Build.0 = Release|Any CPU
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|Any CPU.Build.0 = Release|Any CPU
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|ARM.ActiveCfg = Release|ARM
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|ARM.Build.0 = Release|ARM
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|x64.ActiveCfg = Release|x64
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|x64.Build.0 = Release|x64
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|x86.ActiveCfg = Release|x86
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.AppStore|x86.Build.0 = Release|x86
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|ARM.ActiveCfg = Debug|ARM
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|ARM.Build.0 = Debug|ARM
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|x64.ActiveCfg = Debug|x64
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|x64.Build.0 = Debug|x64
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|x86.ActiveCfg = Debug|x86
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Debug|x86.Build.0 = Debug|x86
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|ARM.ActiveCfg = Release|ARM
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|ARM.Build.0 = Release|ARM
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|x64.ActiveCfg = Release|x64
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|x64.Build.0 = Release|x64
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|x86.ActiveCfg = Release|x86
-		{49EA1009-5B3E-48C6-8BFD-7AD0A622CF07}.Release|x86.Build.0 = Release|x86
 		{D50AFCA2-A209-4140-8B07-86A8ED392B1D}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
 		{D50AFCA2-A209-4140-8B07-86A8ED392B1D}.AppStore|Any CPU.Build.0 = Release|Any CPU
 		{D50AFCA2-A209-4140-8B07-86A8ED392B1D}.AppStore|ARM.ActiveCfg = Release|Any CPU

@@ -9,11 +9,22 @@ namespace TouchScreenBuddy
 
 		public float Delta { get; set; }
 
+		public bool Finished { get; set; }
+
+		public PinchManager()
+		{
+			First = Vector2.Zero;
+			Second = Vector2.Zero;
+			Delta = 0f;
+			Finished = false;
+		}
+
 		public PinchManager(Vector2 first, Vector2 second)
 		{
 			First = first;
 			Second = second;
 			Delta = 0f;
+			Finished = false;
 		}
 
 		public void Update(Vector2 first, Vector2 second)
