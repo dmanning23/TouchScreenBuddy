@@ -9,7 +9,7 @@ namespace TouchScreenBuddy
 	/// </summary>
 	public class TouchManager : BaseInputManager, ITouchManager
 	{
-		#region Fields
+		#region Properties
 
 		/// <summary>
 		/// pixels^2 from start position to register as a drag and not a click
@@ -17,10 +17,6 @@ namespace TouchScreenBuddy
 		private const float _dragDelta = 25f;
 
 		private const int _numTouches = 10;
-
-		#endregion //Fields
-
-		#region Properties
 
 		/// <summary>
 		/// Whether or not touch is enabled
@@ -81,6 +77,7 @@ namespace TouchScreenBuddy
 			Drops.Clear();
 			Flicks.Clear();
 			Pinches.Clear();
+			Holds.Clear();
 
 			if (null != Pinch)
 			{
@@ -184,6 +181,16 @@ namespace TouchScreenBuddy
 							{
 								Pinch.Finished = true;
 							}
+						}
+						break;
+
+					case GestureType.Hold:
+						{
+							var position = ConvertCoordinate(gesture.Position);
+							Holds.Add(new HoldEventArgs()
+							{
+								Position = position
+							});
 						}
 						break;
 				}

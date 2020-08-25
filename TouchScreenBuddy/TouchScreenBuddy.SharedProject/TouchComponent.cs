@@ -29,6 +29,8 @@ namespace TouchScreenBuddy
 
 		public List<PinchEventArgs> Pinches => TouchManager.Pinches;
 
+		public List<HoldEventArgs> Holds => TouchManager.Holds;
+
 		public bool IsEnabled => TouchManager.IsEnabled;
 
 		public GestureType SupportedGestures
