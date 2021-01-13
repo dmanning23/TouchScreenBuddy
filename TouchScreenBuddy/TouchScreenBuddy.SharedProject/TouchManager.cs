@@ -309,7 +309,8 @@ namespace TouchScreenBuddy
 		private void AddHighlightEvent(TouchLocation touch)
 		{
 			//add a highlight event at that location
-			Highlights.Add(new HighlightEventArgs(ConvertCoordinate(touch.Position), this));
+			var coord = ConvertCoordinate(touch.Position);
+			Highlights.Add(new HighlightEventArgs(coord, this));
 		}
 
 		#endregion //Methods
