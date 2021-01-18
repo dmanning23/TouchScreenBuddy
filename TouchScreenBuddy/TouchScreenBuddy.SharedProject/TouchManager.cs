@@ -42,7 +42,7 @@ namespace TouchScreenBuddy
 
 		TouchCollection TouchCollection { get; set; }
 
-		PinchManager Pinch;
+		PinchManager Pinch { get; set; }
 
 		public float FlickMinLength { get; set; } = 8000f;
 
@@ -99,7 +99,7 @@ namespace TouchScreenBuddy
 			{
 				if (Pinch.Finished)
 				{
-					Pinches.Add(new PinchEventArgs
+					Pinches.Add(new PinchEventArgs(Pinch.First, Pinch.Second, Pinch.Delta)
 					{
 						Release = true
 					});
@@ -107,7 +107,7 @@ namespace TouchScreenBuddy
 				}
 				else
 				{
-					Pinches.Add(new PinchEventArgs(Pinch.Delta));
+					Pinches.Add(new PinchEventArgs(Pinch.First, Pinch.Second, Pinch.Delta));
 				}
 			}
 		}
