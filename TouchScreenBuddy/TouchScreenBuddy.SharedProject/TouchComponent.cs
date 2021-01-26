@@ -31,7 +31,17 @@ namespace TouchScreenBuddy
 
 		public List<HoldEventArgs> Holds => TouchManager.Holds;
 
-		public bool IsEnabled => TouchManager.IsEnabled;
+		public bool IsEnabled
+		{
+			get
+			{
+				return TouchManager.IsEnabled;
+			}
+			set
+			{
+				TouchManager.IsEnabled = value;
+			}
+		}
 
 		public GestureType SupportedGestures
 		{

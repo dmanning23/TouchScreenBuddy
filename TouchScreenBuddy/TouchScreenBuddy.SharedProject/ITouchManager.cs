@@ -11,7 +11,7 @@ namespace TouchScreenBuddy
 		/// <summary>
 		/// Check if touch is even enabled. will be false if no touch screen available.
 		/// </summary>
-		bool IsEnabled { get; }
+		bool IsEnabled { get; set; }
 
 		GestureType SupportedGestures { get; set; }
 

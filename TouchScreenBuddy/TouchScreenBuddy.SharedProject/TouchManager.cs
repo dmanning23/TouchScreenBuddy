@@ -21,7 +21,7 @@ namespace TouchScreenBuddy
 		/// <summary>
 		/// Whether or not touch is enabled
 		/// </summary>
-		public bool IsEnabled { get; private set; }
+		public bool IsEnabled { get; set; }
 
 		private TouchLocation[] TouchStartPosition { get; set; }
 
@@ -85,7 +85,7 @@ namespace TouchScreenBuddy
 				Pinch.Delta = 0f;
 			}
 
-			if (isActive)
+			if (isActive && IsEnabled)
 			{
 				TouchCollection = TouchPanel.GetState();
 
