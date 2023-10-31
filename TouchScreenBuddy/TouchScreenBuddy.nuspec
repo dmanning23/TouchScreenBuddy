@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>TouchScreenBuddy</id>
-		<version>2.0.13</version>
+		<version>4.0.0</version>
 		<title>TouchScreenBuddy</title>
 		<authors>dmanning23</authors>
 		<owners>dmanning23</owners>
@@ -18,15 +18,15 @@
 			<!--Xamarin.Android-->
 			<group targetFramework="MonoAndroid10">
 				<dependency id="MonoGame.Framework.Android" version="3.7"/>
-				<dependency id="InputHelper" version="2.0"/>
-				<dependency id="PrimitiveBuddy" version="2.0"/>
+				<dependency id="InputHelper" version="4.0"/>
+				<dependency id="PrimitiveBuddy" version="4.0"/>
 			</group>
 
 			<!--Xamarin.iOS Unified-->
 			<group targetFramework="Xamarin.iOS10">
 				<dependency id="MonoGame.Framework.iOS" version="3.7"/>
-				<dependency id="InputHelper" version="2.0"/>
-				<dependency id="PrimitiveBuddy" version="2.0"/>
+				<dependency id="InputHelper" version="4.0"/>
+				<dependency id="PrimitiveBuddy" version="4.0"/>
 			</group>
 
 			<group targetFramework="net451">
